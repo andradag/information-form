@@ -7,26 +7,39 @@ const passwordInput = document.querySelector("#password");
 // target the form element
 const formElement = document.querySelector("#sign-up-form");
 
+// target error div element
+const errorDivElement = document.querySelector("#msg");
+
 const onSubmit = function (event) {
   event.preventDefault();
-  console.log("submit");
-
   // get all data from in put elements
   const firstName = firstNameInput.value;
   const lastName = lastNameInput.value;
   const email = emailInput.value;
   const password = passwordInput.value;
 
-  // construct the object in JS to store in LS
-  const userObject = {
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    password: password,
-  };
-  console.log(userObject);
+  // check if all form data is complete
+  if (firstName && lastName && email && password) {
+    // clear form elements
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    emailInput.value = "";
+    passwordInput.value = "";
+    // clear error div content
+    errorDivElement.textContent = "";
+    // construct the object in JS to store in LS
+    const userObject = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    };
 
-  // write data into LS
+    // write data into LS
+    localStorage.setItem("user", JSON.stringify(userObject));
+  } else {
+    errorDivElement.textContent = "Please complete all the fields!";
+  }
 };
 
 //add submit event listener
